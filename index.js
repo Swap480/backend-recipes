@@ -36,6 +36,31 @@ app.use(express.json())
 //   "imageUrl": "https://example.com/spaghetti_carbonara.jpg"
 // }
 
+// {
+//   "title": "South Indian Masala Dosa",
+//   "author": "Sanjeev Kapoor",
+//   "difficulty": "Intermediate",
+//   "prepTime": 10,
+//   "cookTime": 15,
+//   "ingredients": [
+//     "200g Rice",
+//     "1 Onion",
+//     "2 Spoon Ghee",
+//     "10 Kadhi patta leaves",
+//     "50g Crushed Seng dana",
+//     "2 Potatos"
+//   ],
+//   "instructions": [
+//     "Put 200g Rice Overnight.",
+//     "Crush 50g Send dana for curry.",
+//     "In a bowl, whisk together curry leaves, send dana, water, onion and ginger.",
+//     "Make mixture of rice with some water.",
+//     "Put the mixed rice on pan and fry it properly.",
+//     "Boil and then smash it and fry it with oil and mori"
+//   ],
+//   "imageUrl": "https://example.com/spaghetti_carbonara.jpg"
+// }
+
 async function createRecipe (newRecipe) {
     try {
         const recipe = new Recipe(newRecipe)
@@ -180,7 +205,7 @@ app.get("/recipes/title/:title", async (req, res) => {
 
 async function readRecipeByAuthor (authorName) {
     try {
-        const recipe = await Recipe.findOne({ author: authorName })
+        const recipe = await Recipe.find({ author: authorName })
         return recipe
     } catch (error) {
         throw error
@@ -204,7 +229,7 @@ app.get("/recipes/author/:author", async (req, res) => {
 
 async function readRecipeWithDifficulty(recipeDifficulty){
     try {
-        const recipe = await Recipe.findOne({ difficulty: recipeDifficulty })
+        const recipe = await Recipe.find({ difficulty: recipeDifficulty })
         return recipe
     } catch (error) {
         throw error
@@ -241,7 +266,7 @@ app.post("/recipes/updateDifficulty/:recipeId", async (req, res) => {
     try {
         const recipe = await readAndUpdateRecipe(req.params.recipeId, req.body)
         if(recipe){
-            res.status(200).json({ message: "Book details updated succesfully.", recipe: recipe})
+            res.status(200).json({ message: "Recipe details updated succesfully.", recipe: recipe})
         } else {
             res.status(404).json({ error: "Recipe not found."})
         }
